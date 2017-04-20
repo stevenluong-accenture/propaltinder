@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-md-2">
+        <h2>Inputs</h2>
+        <form>
+            <p>Opportunity ID: </p>
+            <input class="form-control" ng-model="opportunity.id"/>
+            <p>OG</p>
+            <input class="form-control" ng-model="opportunity.og"/>
+            <p>Master Client #</p>
+            <input class="form-control" ng-model="opportunity.masterClient"/>
+            <p>Industry Segment</p>
+            <input class="form-control" ng-model="opportunity.industrySegment"/>
+            <p>Industry Sub Segment</p>
+            <input class="form-control" ng-model="opportunity.industrySubSegment"/>
+            <p>ToW</p>
+            <input class="form-control" ng-model="opportunity.tow"/>
+            <p>Closed Quarter</p>
+            <input class="form-control" ng-model="opportunity.closedQuarter"/>
+            <p>IC</p>
+            <p>MC</p>
+            <p>SC</p>
+            <p>SI</p>
+            <p>TC</p>
+            <p>AO</p>
+            <p>BPO</p>
+            <p>IO</p>
+            <p>Responsible Business Entity</p>
+            <p>Contract Extension Flag</p>
+            <p>Software Delivery</p>
+            <p>TODO - ATTRIBUTES</p>
+            <br/>
+            <button class="btn btn-primary" ng-click="generate()">Generate</button>
+            <button class="btn btn-primary" ng-click="">View</button>
+            <button class="btn btn-primary" ng-click="">Export</button>
+        </form>
+
+    </div>
+    <div class="col-md-10">
+        <h2> Similar opportunities</h2>
+        <table class="table table-striped">
+            <th>Opportunity ID</th>
+            <th>OU</th>
+            <th>CSG</th>
+            <th>SubCSG</th>
+            <th>Master Client #</th>
+            <th>Closed Quarter</th>
+            <th>SALES TEAM - TODO</th>
+            <th>Opportunity Contact</th>
+            <th>Solution Architect</th>
+            <th></th>
+            <tr>
+                <td>AZE123123</td>
+                <td>GALIA</td>
+                <td>VALUE A</td>
+                <td>VALUE B</td>
+                <td>VALUE B</td>
+                <td>VALUE B</td>
+                <td>VALUE B</td>
+                <td>VALUE B</td>
+                <td>VALUE B</td>
+            </tr>
+            <tr ng-repeat="o in opportunities">
+                <td>{{o.id}}</td>
+                <td>{{o.og}}</td>
+                <td>{{o.fieldA}}</td>
+                <td>{{o.fieldB}}</td>
+                <td>{{o.fieldB}}</td>
+                <td>{{o.fieldB}}</td>
+                <td>{{o.fieldB}}</td>
+                <td>{{o.fieldB}}</td>
+                <td>{{o.fieldB}}</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-md-8">
+        <h2>? </h2>
+        <p> TODO</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Bot ? </h2>
+        <p> TODO</p>
+    </div>
+</div>
+
