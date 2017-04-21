@@ -60,7 +60,7 @@ for k in range(1,len(col_names)):
 
 search_names = list(transformed)
 
-def calculate_scores(searchDict):
+def calculate_scores(searchDict,coeff):
     print(searchDict)
     search_vect = [0]*(len(search_names)-1)
 
@@ -71,6 +71,8 @@ def calculate_scores(searchDict):
         idx = search_names.index(name)
         search_vect[idx-1] = 1
     #print(search_vect)
+    if len(search_vect) == len(coeff):
+        search_vect = np.multiply(search_vect, coeff)
 
     vals = transformed.iloc[:,1:len(search_names)].as_matrix()
 
@@ -95,13 +97,32 @@ def top_match_ids():
 
     return json.dumps(calculate_scores(data))
 
-def process_res(res):
-    result = {}
-    for entity in res.get_entities():
-        print('"%s":' % entity.get_name())
-        print('Type: %s, Score: %s' % (entity.get_type(), entity.get_score()))
+last_search = {}
+search_coeff = [1]*(len(search_names)-1)
 
-        result[entity.get_type()] = entity.get_name()
+def process_res(res):
+    global last_search
+
+    result = {'coeff':[1],'search':{}}
+    if(res.get_top_intent().get_name() == 'datasearch'):
+        for entity in res.get_entities():
+            print('"%s":' % entity.get_name())
+            print('Type: %s, Score: %s' % (entity.get_type(), entity.get_score()))
+
+            result['search'][entity.get_type()] = entity.get_name()
+        last_search = result['search']
+    else:
+        print('modify emphasis')
+        for entity in res.get_entities():
+            print('"%s":' % entity.get_name())
+
+            for k in search_names:
+                if k.lower().startswith(entity.get_name().lower()):
+                    idx = search_names.index(k)
+                    search_coeff[idx - 1] = 5
+
+        result['coeff'] = search_coeff
+        result['search'] = last_search
 
     return result
 
@@ -112,6 +133,6 @@ def top_match_txt():
     res = CLIENT.predict(TEXT)
     parsed = process_res(res)
 
-    return json.dumps(calculate_scores(parsed))
+    return json.dumps(calculate_scores(parsed['search'],parsed['coeff']))
 
 app.run(host="0.0.0.0",port=80)
