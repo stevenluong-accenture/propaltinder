@@ -19,11 +19,19 @@ conn = pymysql.connect(
     user="admin",password="12345678",db="propaltinder_db_1")
 db = conn.cursor()
 
-col_names =["opportunityId","og","ou","csg","subCsg","masterClientClass","masterClientLevel","industrySegment","industrySubSegment","stage","tow","restricted","closedQuarter","totalNetRevenue","cons","os","ic","mc","sc","si","tc","ao","bpo","io","localCurrency","opportunityClass","riskProfile","pricingStructure","responsibleBusinessEntity","responsibleBusinessEntityOverride","clientClassificationAttribute","contractExtensionFlag","softwareDelivery","clientLocation","sellingCountry","geoArea","geoUnit","accentureDigital","accentureSoftware","alliances","businessService","consultingPractice","crossServiceGroupOffering","mergersAcquisitions","microsoftPlatformInformation","strategyOfferings","techOperationsOfferings"]
+col_names =["opportunityId","og","ou","csg","subCsg","masterClientClass","industrySegment","industrySubSegment","stage","tow","restricted","closedQuarter","totalNetRevenue","cons","os","ic","mc","sc","si","tc","ao","bpo","io","localCurrency","opportunityClass","riskProfile","pricingStructure","responsibleBusinessEntity","responsibleBusinessEntityOverride","clientClassificationAttribute","contractExtensionFlag","softwareDelivery","clientLocation","sellingCountry","geoArea","geoUnit","accentureDigital","accentureSoftware","alliances","businessService","consultingPractice","crossServiceGroupOffering","mergersAcquisitions","microsoftPlatformInformation","strategyOfferings","techOperationsOfferings"]
 col_str = ",".join(col_names)
 
+all_col_names = []
+sql = "DESCRIBE opportunity8;"
+db.execute(sql)
+
+for row in db.fetchall():
+    all_col_names.append(row[0])
+print(all_col_names)
+
 data_sql = []
-sql = "select "+col_str+" from opportunity7"
+sql = "select * from opportunity8;"
 db.execute(sql)
 
 for row in db.fetchall():
@@ -33,12 +41,12 @@ app = Flask('Similarity')
 CORS(app)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 #in_data = pd.read_csv('data/inputs_only.csv',sep=";",encoding="utf-8",dtype=str)
-in_data = pd.DataFrame(data_sql,columns=col_names)
+in_data = pd.DataFrame(data_sql,columns=all_col_names)
 transformed = in_data[['opportunityId']]
 col_names = list(in_data)
 
-for k in range(1,len(in_data.columns)):
-    col = in_data[[col_names[k]]]
+for k in range(1,len(col_names)):
+    col = in_data[col_names[k]].str.lower()
     dum = pd.get_dummies(col,prefix=col_names[k])
 
     transformed = pd.concat([transformed, dum], axis=1)
@@ -72,7 +80,13 @@ def calculate_scores(searchDict):
     df_score = pd.concat([in_data,scores], axis=1)
     df_score = df_score.sort_values('score', ascending=False)
 
-    return df_score.head(10).to_json(orient="records")
+    wins = [float(v) for v in df_score['win'][0:100]]
+    rate = np.mean(wins)
+
+    result = {}
+    result['records'] = df_score.head(10).to_json(orient="records")
+    result['successRate'] = rate
+    return result
 
 @app.route('/', methods=['POST'])
 def top_match_ids():
@@ -100,4 +114,4 @@ def top_match_txt():
 
     return json.dumps(calculate_scores(parsed))
 
-app.run(host="0.0.0.0",port=80)
+app.run(host="0.0.0.0",port=5000)
