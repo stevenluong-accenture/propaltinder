@@ -32,8 +32,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
 from .luis_parametervalue import LUISParameterValue
+import luis_parametervalue
 
-class LUISParameter:
+class LUISParameter(object):
     '''
     LUIS Parameter Class.
     Describes the LUIS Parameter structure.
@@ -44,11 +45,11 @@ class LUISParameter:
         A constructor for the LUISParameter class.
         :param parameter: A dictionary containing the parameter data.
         '''
-        self._name = parameter['name']
-        self._required = parameter['required']
+        self._name = parameter[u'name']
+        self._required = parameter[u'required']
         self._parameter_values = []
-        if parameter['value']:
-            for parameter_value in parameter['value']:
+        if parameter[u'value']:
+            for parameter_value in parameter[u'value']:
                 self._parameter_values.append(LUISParameterValue(parameter_value))
 
     def get_name(self):

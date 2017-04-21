@@ -33,7 +33,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 from .luis_action import LUISAction
 
-class LUISIntent:
+class LUISIntent(object):
     '''
     LUIS Intent Class.
     Describes the LUIS Intent structure.
@@ -41,15 +41,15 @@ class LUISIntent:
 
     def __init__(self, intent):
         '''
-        LUIS Intent Class.
-        Describes the LUIS Intent structure.
+        A constructor for the LUISIntent class.
+        :param intent: A dictionary containing the intent data.
         '''
-        self._name = intent['intent']
-        self._score = intent['score']
+        self._name = intent[u'intent']
+        self._score = intent[u'score']
         self._actions = []
 
-        if 'actions' in intent:
-            for action in intent['actions']:
+        if u'actions' in intent:
+            for action in intent[u'actions']:
                 self._actions.append(LUISAction(action))
 
 

@@ -31,7 +31,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
-class LUISParameterValue:
+class LUISParameterValue(object):
     '''
     LUIS Paramater Value Class.
     Describes the LUIS Paramter Value structure.
@@ -42,17 +42,16 @@ class LUISParameterValue:
         A constructor for the LUISAction class.
         :param parameter_value: A dictionary containing the parameter value data.
         '''
-        self._name = parameter_value['entity']
-        self._type = parameter_value['type']
-        if 'score' in parameter_value:
-            self._score = parameter_value['score']
+        self._name = parameter_value[u'entity']
+        self._type = parameter_value[u'type']
+        if u'score' in parameter_value:
+            self._score = parameter_value[u'score']
         else:
             self._score = None
-        if 'resolution' in parameter_value:
-            self._resolution = parameter_value['resolution']
+        if u'resolution' in parameter_value:
+            self._resolution = parameter_value[u'resolution']
         else:
             self._resolution = None
-
 
     def get_name(self):
         '''
@@ -64,14 +63,14 @@ class LUISParameterValue:
     def get_type(self):
         '''
         A getter for the parameter value's type.
-        :return: Parameter value's type.
+        :return: Parameter values's type.
         '''
         return self._type
 
     def get_score(self):
         '''
         A getter for the parameter value's score.
-        :return: Parameter value's score.
+        :return: Parameter values's score.
         '''
         return self._score
 

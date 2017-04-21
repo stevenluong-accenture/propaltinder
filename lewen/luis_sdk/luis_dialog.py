@@ -31,7 +31,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
-class LUISDialog:
+class LUISDialog(object):
     '''
     LUIS Dialog Class.
     Describes the LUIS Action structure.
@@ -42,19 +42,19 @@ class LUISDialog:
         A constructor for the LUISDialog class.
         :param action: A dictionary containing the dialog data.
         '''
-        if 'prompt' in dialog:
-            self._prompt = dialog['prompt']
+        if u'prompt' in dialog:
+            self._prompt = dialog[u'prompt']
         else:
             self._prompt = None
 
-        if 'parameterName' in dialog:
-            self._parameter_name = dialog['parameterName']
+        if u'parameterName' in dialog:
+            self._parameter_name = dialog[u'parameterName']
         else:
             self._parameter_name = None
 
-        self._context_id = dialog['contextId']
-        self._status = dialog['status']
-        self._finished = self._status == 'Finished'
+        self._context_id = dialog[u'contextId']
+        self._status = dialog[u'status']
+        self._finished = self._status == u'Finished'
 
     def get_prompt(self):
         '''

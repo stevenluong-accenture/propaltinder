@@ -31,7 +31,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
-class LUISEntity:
+class LUISEntity(object):
     '''
     LUIS Entity Class.
     Describes the LUIS Entity structure.
@@ -42,22 +42,22 @@ class LUISEntity:
         A constructor for the LUISEntity class.
         :param entity: A dictionary containing the entity data.
         '''
-        self._name = entity['entity']
-        self._type = entity['type']
-        if 'startIndex' in entity:
-            self._start_idx = entity['startIndex']
+        self._name = entity[u'entity']
+        self._type = entity[u'type']
+        if u'startIndex' in entity:
+            self._start_idx = entity[u'startIndex']
         else:
             self._start_idx = None
-        if 'endIndex' in entity:
-            self._end_idx = entity['endIndex']
+        if u'endIndex' in entity:
+            self._end_idx = entity[u'endIndex']
         else:
             self._end_idx = None
-        if 'score' in entity:
-            self._score = entity['score']
+        if u'score' in entity:
+            self._score = entity[u'score']
         else:
             self._score = None
-        if 'resolution' in entity:
-            self._resolution = entity['resolution']
+        if u'resolution' in entity:
+            self._resolution = entity[u'resolution']
         else:
             self._resolution = None
 
@@ -95,6 +95,7 @@ class LUISEntity:
         :return: Entity's score.
         '''
         return self._score
+
 
     def get_resolution(self):
         '''

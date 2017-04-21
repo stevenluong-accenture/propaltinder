@@ -37,7 +37,7 @@ from .luis_entity import LUISEntity
 from .luis_composite_entity import LUISCompositeEntity
 from .luis_dialog import LUISDialog
 
-class LUISResponse:
+class LUISResponse(object):
     '''
     LUIS Response Class.
     Describes the response structure, and is the main point
@@ -50,25 +50,25 @@ class LUISResponse:
         :param JSONResponse: A string containing the incoming JSON.
         '''
         if JSONResponse is None:
-            raise TypeError('NULL JSON response')
+            raise TypeError(u'NULL JSON response')
         if not JSONResponse:
-            raise ValueError('Invalid App Id')
+            raise ValueError(u'Invalid App Id')
 
-        if isinstance(JSONResponse, str):
+        if isinstance(JSONResponse, unicode):
             try:
                 response = json.loads(JSONResponse)
             except Exception:
-                raise Exception('Error in parsing json')
+                raise Exception(u'Error in parsing json')
         else:
             response = JSONResponse
 
-        if 'statusCode' in response:
+        if u'statusCode' in response:
             raise Exception(u'Invalid Subscription Key')
 
-        self._query = response['query']
+        self._query = response[u'query']
 
-        if 'dialog' in response:
-            self._dialog = LUISDialog(response['dialog'])
+        if u'dialog' in response:
+            self._dialog = LUISDialog(response[u'dialog'])
         else:
             self._dialog = None
 
@@ -76,19 +76,19 @@ class LUISResponse:
         self._entities = []
         self._composite_entities = []
 
-        self._top_scoring_intent = LUISIntent(response['topScoringIntent'])
+        self._top_scoring_intent = LUISIntent(response[u'topScoringIntent'])
         
-        if 'intents' in response:
-            for intent in response['intents']:
+        if u'intents' in response:
+            for intent in response[u'intents']:
                 self._intents.append(LUISIntent(intent))
         else:
             self._intents.append(self._top_scoring_intent)
-        
-        for entity in response['entities']:
+
+        for entity in response[u'entities']:
             self._entities.append(LUISEntity(entity))
 
-        if 'compositeEntities' in response:
-            for composite_entity in response['compositeEntities']:
+        if u'compositeEntities' in response:
+            for composite_entity in response[u'compositeEntities']:
                 self._composite_entities.append(LUISCompositeEntity(composite_entity))
 
     def get_query(self):

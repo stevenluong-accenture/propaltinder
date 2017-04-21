@@ -33,7 +33,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 from .luis_parameter import LUISParameter
 
-class LUISAction:
+class LUISAction(object):
     '''
     LUIS Action Class.
     Describes the LUIS Action structure.
@@ -44,10 +44,10 @@ class LUISAction:
         A constructor for the LUISAction class.
         :param action: A dictionary containing the action data.
         '''
-        self._name = action['name']
-        self._triggered = action['triggered']
+        self._name = action[u'name']
+        self._triggered = action[u'triggered']
         self._parameters = []
-        for parameter in action['parameters']:
+        for parameter in action[u'parameters']:
             self._parameters.append(LUISParameter(parameter))
 
     def get_name(self):
