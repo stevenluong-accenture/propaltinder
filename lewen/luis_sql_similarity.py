@@ -84,7 +84,7 @@ def calculate_scores(searchDict):
     rate = np.mean(wins)
 
     result = {}
-    result['records'] = df_score.head(10).to_json(orient="records")
+    result['records'] = json.loads(df_score.head(10).to_json(orient="records"))
     result['successRate'] = rate
     return result
 
@@ -114,4 +114,4 @@ def top_match_txt():
 
     return json.dumps(calculate_scores(parsed))
 
-app.run(host="0.0.0.0",port=5000)
+app.run(host="0.0.0.0",port=80)

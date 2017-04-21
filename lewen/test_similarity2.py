@@ -5,7 +5,7 @@ import pandas as pd
 
 from flask import Flask
 from flask import request
-
+from flask_cors import CORS, cross_origin
 import json
 
 conn = pymysql.connect(
@@ -51,6 +51,8 @@ def calculate_scores(searchDict):
 
     for k in searchDict:
         name = k + '_'+searchDict[k]
+        if not k in search_names:
+            continue
         idx = search_names.index(name)
         search_vect[idx-1] = 1
 
