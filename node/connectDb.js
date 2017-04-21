@@ -1,5 +1,5 @@
 var mysql = require("mysql");
- var dbTable = "opportunity4"
+ var dbTable = "opportunity8"
 var con = mysql.createConnection({
     host: "propaltinder-mysql-cluster.cluster-cek9m9yl7zkn.us-east-1.rds.amazonaws.com",
     user: "admin",
