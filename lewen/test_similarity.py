@@ -59,7 +59,7 @@ def top_match_ids():
 
     return json.dumps(calculate_scores(data))
 
-app.run(host="0.0.0.0",port=5000)
+app.run(host="0.0.0.0",port=80)
 
 
 
