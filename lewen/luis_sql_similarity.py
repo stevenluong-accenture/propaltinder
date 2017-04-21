@@ -23,7 +23,7 @@ col_names =["opportunityId","og","ou","csg","subCsg","masterClientClass","master
 col_str = ",".join(col_names)
 
 data_sql = []
-sql = "select "+col_str+" from opportunity6 limit 2000;"
+sql = "select "+col_str+" from opportunity7"
 db.execute(sql)
 
 for row in db.fetchall():
@@ -101,4 +101,3 @@ def top_match_txt():
     return json.dumps(calculate_scores(parsed))
 
 app.run(host="0.0.0.0",port=80)
-
